@@ -10,7 +10,12 @@
 <body>
 <div layout:fragment="content1">
     <div class="col-md-6 offset-3">
-    <form method="post" th:action="@{save}">
+    <form method="post" th:action="@{save(page=${page}, keyword=${keyword})}">
+        <div class="form">
+            <label>ID :</label>
+            <label th:text="${patient.id}"></label>
+            <input class="form-control" type="hidden" name="id" th:value="${patient.id}">
+        </div>
         <div class="form">
             <label>Nom</label>
             <input class="form-control" type="text" name="nom" th:value="${patient.nom}">

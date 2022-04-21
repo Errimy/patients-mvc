@@ -39,6 +39,11 @@
                             Supprimer
                         </a>
                     </td>
+                    <td>
+                        <a class="btn btn-success" th:href="@{editPatient(id=${p.id}, keyword=${keyword}, page=${currentPage})}">
+                            Edit
+                        </a>
+                    </td>
 
                 </tr>
                 </tbody>

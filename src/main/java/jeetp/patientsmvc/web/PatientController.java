@@ -55,9 +55,21 @@ public class PatientController {
     }
 
     @PostMapping("/save")
-    public String save(Model model, @Valid Patient patient, BindingResult bindingResult){
+    public String save(Model model, @Valid Patient patient, BindingResult bindingResult
+            ,@RequestParam(defaultValue = "") String keyword
+            ,@RequestParam(defaultValue = "0")  int page){
         if (bindingResult.hasErrors()) return "formPatients";
         patientRepository.save(patient);
-        return "formPatients";
+        return "redirect:/index?page="+page+"&keyword="+keyword;
+    }
+
+    @GetMapping("/editPatient")
+    public String editPatient(Model model, Long id, String keyword, int page){
+        Patient patient= patientRepository.findById(id).get();
+        if (patient==null) throw new RuntimeException("Patient Introuvable");
+        model.addAttribute("patient",patient);
+        model.addAttribute("page", page);
+        model.addAttribute("keyword", keyword);
+        return "editPatient";
     }
 }
