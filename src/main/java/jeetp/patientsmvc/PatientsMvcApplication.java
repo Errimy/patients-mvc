@@ -2,10 +2,13 @@ package jeetp.patientsmvc;
 
 import jeetp.patientsmvc.entities.Patient;
 import jeetp.patientsmvc.repositories.PatientRepository;
+import jeetp.patientsmvc.security.services.SecurityService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Date;
 
@@ -14,6 +17,10 @@ public class PatientsMvcApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PatientsMvcApplication.class, args);
+	}
+	@Bean
+	PasswordEncoder passwordEncoder (){
+		return new BCryptPasswordEncoder();
 	}
 	//@Bean
 	CommandLineRunner commandLineRunner(PatientRepository patientRepository){
@@ -26,6 +33,22 @@ public class PatientsMvcApplication {
 			patientRepository.findAll().forEach(p -> {
 				System.out.println(p.getNom());
 			});
+		};
+	}
+	//@Bean
+	CommandLineRunner saveUsers(SecurityService securityService){
+		return args-> {
+		securityService.saveNewUser("hatim","1234","1234");
+		securityService.saveNewUser("hafid","1234","1234");
+		securityService.saveNewUser("ilyass","1234","1234");
+
+		securityService.saveNewRole("USER","");
+		securityService.saveNewRole("ADMIN","");
+
+		securityService.addRoleToUser("hatim","USER");
+		securityService.addRoleToUser("hatim","ADMIN");
+		securityService.addRoleToUser("hafid","USER");
+		securityService.addRoleToUser("ilyass","USER");
 		};
 	}
 
