@@ -30,13 +30,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             authorities.add(authority);
         });*/
 
-        Collection<GrantedAuthority> authorities1=
-                appUser.getAppRoles()
-                        .stream()
-                        .map(role-> new SimpleGrantedAuthority(role.getRoleName()))
-                        .collect(Collectors.toList());
+        Collection<GrantedAuthority> authorities1;
+        authorities1 = appUser.getAppRoles()
+                .stream()
+                .map(role-> new SimpleGrantedAuthority(role.getRoleName()))
+                .collect(Collectors.toList());
 
-                User user=new User(appUser.getUsername(),appUser.getPassword(),authorities1);
+        User user=new User(appUser.getUsername(),appUser.getPassword(),authorities1);
         return user;
     }
 
